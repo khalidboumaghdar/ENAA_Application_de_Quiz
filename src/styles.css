@@ -1,1 +1,68 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-family: 'Segoe UI', sans-serif;
+    padding-top: 70px;
+  }
+
+  .navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-brand, .nav-link {
+    color: #212529 !important;
+  }
+
+  .navbar-toggler-icon i {
+    color: #212529;
+  }
+
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .profile-header img {
+    border-radius: 50%;
+    width: 50px;
+    border: 2px solid #dee2e6;
+  }
+
+  .stat-box {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .category-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 16px;
+    padding: 1.2rem;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  .category-card:hover {
+    background-color: #f1f1f1;
+    transform: translateY(-5px);
+  }
+
+  .category-card i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  footer {
+    background-color: #ffffff;
+    border-top: 1px solid #dee2e6;
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: 40px;
+    color: #6c757d;
+  }

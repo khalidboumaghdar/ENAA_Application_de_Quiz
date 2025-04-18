@@ -1,0 +1,39 @@
+<div class="container py-5" *ngIf="questions.length">
+    <div class="quiz-box shadow p-4 rounded bg-white">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Question {{ currentQuestionIndex + 1 }}/{{ questions.length }}</h4>
+        <span class="badge bg-primary fs-6">Score: {{ score }}</span>
+      </div>
+  
+      <div class="progress mb-4" style="height: 8px;">
+        <div class="progress-bar bg-success" role="progressbar" [style.width.%]="getProgress()"></div>
+      </div>
+  
+      <h5 [innerHTML]="questions[currentQuestionIndex].question"></h5>
+  
+      <div class="mt-4" id="answers">
+        <button
+          *ngFor="let answer of questions[currentQuestionIndex].answers"
+          class="btn w-100 text-start mb-2"
+          [ngClass]="{
+            'btn-outline-primary': selectedAnswer !== answer,
+            'btn-success': selectedAnswer === answer && answer === questions[currentQuestionIndex].correct_answer,
+            'btn-danger': selectedAnswer === answer && answer !== questions[currentQuestionIndex].correct_answer
+          }"
+          [disabled]="selectedAnswer"
+          (click)="selectAnswer(answer)"
+          [innerHTML]="answer"
+        ></button>
+      </div>
+  
+      <div class="text-end mt-4">
+        <button class="btn btn-success" (click)="nextQuestion()" *ngIf="showNextButton && currentQuestionIndex < questions.length - 1">
+          Suivant
+        </button>
+        <button class="btn btn-primary" *ngIf="currentQuestionIndex === questions.length - 1 && showNextButton">
+          Terminé
+        </button>
+      </div>
+    </div>
+  </div>
+  
