@@ -4,10 +4,8 @@ import { HomeComponent } from './home/home.component';
 import { QuizeComponent } from './quize/quize.component';
 
 const routes: Routes = [
-  {path: '', component:HomeComponent },
-  {path:'quize',component:QuizeComponent}
-
-
+  { path: '', component: HomeComponent },
+  { path: 'quize/:categoryId', component: QuizeComponent }
 ];
 
 @NgModule({

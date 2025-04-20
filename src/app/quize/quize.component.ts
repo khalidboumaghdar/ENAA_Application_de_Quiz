@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-quize',
@@ -6,51 +8,49 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./quize.component.css']
 })
 export class QuizeComponent implements OnInit {
+
   questions: any[] = [];
   currentQuestionIndex = 0;
-  score = 0;
   selectedAnswer: string | null = null;
+  score = 0;
   showNextButton = false;
 
-  constructor() {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
-  ngOnInit(): void {
-    this.loadQuestions();
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      const categoryId = params['categoryId'];
+      this.loadQuestions(categoryId);
+    });
   }
 
-  async loadQuestions() {
-    try {
-      const res = await fetch('https://opentdb.com/api.php?amount=10&category=12&difficulty=medium&type=multiple');
-      console.log(res);
-      const data = await res.json();
-
-      this.questions = data.results.map((q: any) => {
+  loadQuestions(categoryId: number) {
+    const apiURL = `https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=medium&type=multiple`;
+    this.http.get<any>(apiURL).subscribe(res => {
+      this.questions = res.results.map((q: any) => {
         const answers = [...q.incorrect_answers];
-        const randomIndex = Math.floor(Math.random() * 4);
-        answers.splice(randomIndex, 0, q.correct_answer); 
+        const randomIndex = Math.floor(Math.random() * (answers.length + 1));
+        answers.splice(randomIndex, 0, q.correct_answer);
         return {
-          question: q.question,
-          answers,
-          correct_answer: q.correct_answer
+          ...q,
+          answers
         };
       });
-    } catch (error) {
-      console.error('Erreur lors du chargement des questions:', error);
-    }
+    });
   }
 
   selectAnswer(answer: string) {
     this.selectedAnswer = answer;
     this.showNextButton = true;
     if (answer === this.questions[this.currentQuestionIndex].correct_answer) {
-      this.score++;
+      this.score += 1;
     }
   }
 
   nextQuestion() {
-    this.currentQuestionIndex++;
     this.selectedAnswer = null;
     this.showNextButton = false;
+    this.currentQuestionIndex += 1;
   }
 
   getProgress() {
