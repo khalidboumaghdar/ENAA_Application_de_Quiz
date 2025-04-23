@@ -6,6 +6,7 @@ import { QuizeComponent } from './quize/quize.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'quize/:categoryId', component: QuizeComponent }
+
 ];
 
 @NgModule({
